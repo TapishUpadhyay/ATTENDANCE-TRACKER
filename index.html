@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+    <header class="app-header">
+      <h1>📋 Attendance Tracker</h1>
+      <p class="subtitle">Register participants and mark session attendance</p>
+    </header>
+
+    <!-- Add Participant -->
+    <section class="card">
+      <h2>Add Participant</h2>
+      <form id="addForm" class="add-form">
+        <input type="text" id="participantName" placeholder="Full Name" required>
+        <input type="text" id="participantId" placeholder="Participant ID" required>
+        <button type="submit" class="btn btn-primary">+ Add Participant</button>
+      </form>
+      <p id="formError" class="error-text"></p>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary">
+      <div class="summary-card total">
+        <span class="summary-number" id="totalCount">0</span>
+        <span class="summary-label">Total Participants</span>
+      </div>
+      <div class="summary-card present">
+        <span class="summary-number" id="presentCount">0</span>
+        <span class="summary-label">Present</span>
+      </div>
+      <div class="summary-card absent">
+        <span class="summary-number" id="absentCount">0</span>
+        <span class="summary-label">Absent</span>
+      </div>
+      <div class="summary-card unmarked">
+        <span class="summary-number" id="unmarkedCount">0</span>
+        <span class="summary-label">Not Marked</span>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section class="card controls">
+      <h2>Participants</h2>
+      <div class="controls-row">
+        <input type="text" id="searchBox" placeholder="🔍 Search by name or ID...">
+        <select id="filterSelect">
+          <option value="all">All</option>
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+          <option value="unmarked">Not Marked</option>
+        </select>
+        <button id="resetAllBtn" class="btn btn-outline">Reset All to Absent</button>
+        <button id="clearAllBtn" class="btn btn-danger">Clear All Data</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="participantsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Participant ID</th>
+              <th>Status</th>
+              <th>Mark Attendance</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="participantsBody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+        <p id="emptyState" class="empty-state">No participants added yet. Add one above to get started.</p>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <p>Data is saved locally in your browser (localStorage).</p>
+    </footer>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

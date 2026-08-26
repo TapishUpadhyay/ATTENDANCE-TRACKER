@@ -1,51 +1,34 @@
-# Attendance Tracker for Participants
+# Attendance Tracker
 
-A simple web-based attendance tracker built with **Python (Flask)** and **SQLite**.
+A simple, fully client-side Attendance Tracker for event/club participants.
 
 ## Features
-- Register participants with a unique **Participant ID** and **Name**
-- Mark each participant **Present** or **Absent** for a session
-- "Mark All Present" / "Mark All Absent" bulk actions to reset for a new session
-- View a live table of every participant's current attendance status
-- Dashboard showing **Total**, **Present**, and **Absent** counts
-- Remove participants no longer needed
+- Add/register participants with Name + Participant ID (duplicate ID prevention).
+- Mark each participant Present / Absent for a session (click again to unmark).
+- Search participants by name/ID and filter by status (All / Present / Absent / Not Marked).
+- Live summary cards: Total, Present, Absent, Not Marked counts.
+- "Reset All to Absent" and "Clear All Data" bulk actions.
+- Remove individual participants.
+- Data persists in the browser via `localStorage` — no backend/database required.
 
-## Technologies Used
-- **Python 3** with **Flask** (lightweight web framework) for routing and server logic
-- **SQLite** (via Python's built-in `sqlite3` module) for persistent storage — no separate database server needed
-- **Jinja2** templates (bundled with Flask) for rendering HTML
-- **HTML/CSS** for the front end (no JavaScript frameworks required, keeps it simple and dependency-free)
+## Tech Stack
+- **HTML5** — structure (`index.html`)
+- **CSS3** — styling, responsive grid/flex layout (`style.css`)
+- **Vanilla JavaScript (ES6)** — all logic: state management, rendering, event handling, localStorage persistence (`script.js`)
 
-## Project Structure
-```
-attendance-tracker/
-├── app.py                 # Flask application (routes + database logic)
-├── requirements.txt       # Python dependencies
-├── templates/
-│   └── index.html         # Main UI template
-├── static/
-│   └── style.css          # Styling
-└── README.md
-```
+No frameworks, build tools, or servers needed.
 
-## How to Run
-1. Make sure Python 3.8+ is installed.
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Start the app:
-   ```bash
-   python app.py
-   ```
-4. Open your browser to `http://127.0.0.1:5000`
+## How it works
+1. Participants are stored as an array of objects `{ id, name, participantId, status }` in `localStorage` under the key `attendance_tracker_participants`.
+2. Adding a participant validates required fields and checks for duplicate Participant IDs.
+3. Marking Present/Absent updates the `status` field and immediately re-renders the table + summary counts.
+4. All state changes are persisted to `localStorage` so data survives page refreshes.
 
-The SQLite database file (`attendance.db`) is created automatically on first run.
+## Run locally
+Just open `index.html` in any browser — no build step required.
 
-## Approach
-The app follows a simple **MVC-like** pattern:
-- **Model**: a single `participants` table in SQLite with columns `participant_id` (primary key), `name`, and `status` (`Present`/`Absent`).
-- **View**: one Jinja2 template (`index.html`) renders the registration form, bulk-action buttons, and a live table with per-row Present/Absent/Delete controls, plus summary cards for total/present/absent counts.
-- **Controller**: Flask routes handle adding participants, marking individual/bulk attendance, and deletion, each redirecting back to the main page so the table always reflects the current database state.
-
-Data persists across restarts since it's stored in a local SQLite file, and duplicate Participant IDs are rejected using the database's primary-key constraint.
+## Deploy to Vercel
+This is a static site, so it deploys with zero configuration:
+1. Push this folder to a GitHub repo (or drag-and-drop the folder into the Vercel dashboard).
+2. In Vercel, import the project — Framework Preset: **Other** (static).
+3. Deploy. `index.html` will be served at the root.

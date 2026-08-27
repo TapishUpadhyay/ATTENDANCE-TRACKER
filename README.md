@@ -21,3 +21,4 @@ How it works
 3. Marking Present/Absent updates the `status` field and immediately re-renders the table + summary counts.
 
 
+ALTERNATIVE URL:-https://tapish.online/attendance-tracker
